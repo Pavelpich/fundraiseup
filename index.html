@@ -32,9 +32,9 @@
     <!-- Fundraise Up + GA4 Event Tracking -->
     <script>
         FundraiseUp.on('checkout.open', function() {
+            console.log('checkout.open fired');
             gtag('event', 'checkout_open', {
-                event_category: 'FundraiseUp',
-                event_label: 'Checkout Opened'
+                event_category: 'FundraiseUp'
             });
         });
 
