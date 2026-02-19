@@ -16,15 +16,6 @@
     })(window,document,'script','FundraiseUp','AEMZUDUM');</script>
     <!-- End Fundraise Up -->
 
-    <!-- Event interceptor — удали после отладки -->
-    <script>
-        var orig = FundraiseUp.on.bind(FundraiseUp);
-        FundraiseUp.on = function(name, cb) {
-            console.log('📌 registered event:', name);
-            return orig(name, cb);
-        };
-    </script>
-
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQTQER1S8R"></script>
     <script>
@@ -40,10 +31,29 @@
 
     <script>
         FundraiseUp.on('checkoutOpen', function(e) {
-        gtag('event', 'checkout_open', {
-            event_category: 'FundraiseUp'
+            gtag('event', 'checkout_open', {
+                event_category: 'FundraiseUp',
+                campaign_name: e.campaign.name
+            });
+
+            // Имитируем donationComplete при любом клике на Donate
+            // Поскольку чекаут в iframe — слушаем postMessage
+            window.addEventListener('message', function(event) {
+                if (event.data && (
+                    event.data.type === 'donate' ||
+                    event.data.type === 'submit' ||
+                    JSON.stringify(event.data).toLowerCase().includes('donat')
+                )) {
+                    console.log('💳 Donate clicked via postMessage:', event.data);
+                    gtag('event', 'purchase', {
+                        transaction_id: 'test_' + Date.now(),
+                        value: 700,
+                        currency: 'USD',
+                        event_category: 'FundraiseUp'
+                    });
+                }
+            });
         });
-    });
 
         FundraiseUp.on('donationComplete', function(e) {
             gtag('event', 'purchase', {
