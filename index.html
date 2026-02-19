@@ -41,10 +41,11 @@
         });
 
         FundraiseUp.on('donationComplete', function(e) {
+            console.log('🎉 donationComplete', JSON.stringify(e));
             gtag('event', 'purchase', {
-                transaction_id: details.donation.id,
-                value: details.donation.amount,
-                currency: details.donation.currency,
+                transaction_id: e.donation.id,
+                value: e.donation.amount,
+                currency: e.donation.currency,
                 event_category: 'FundraiseUp'
             });
         });
