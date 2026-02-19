@@ -3,10 +3,9 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>Helping Hand — Donate</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
+
     <!-- Fundraise Up: the new standard for online giving -->
     <script>(function(w,d,s,n,a){if(!w[n]){var l='call,catch,on,once,set,then,track'
     .split(','),i,o=function(n){return'function'==typeof n?o.l.push([arguments])&&o
@@ -20,14 +19,35 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQTQER1S8R"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-XQTQER1S8R');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XQTQER1S8R');
     </script>
 </head>
 <body>
+
     <a href="#XJKDHSTQ" style="display: none"></a>
+
+    <!-- Fundraise Up + GA4 Event Tracking -->
+    <script>
+        FundraiseUp.on('checkout.open', function() {
+            gtag('event', 'checkout_open', {
+                event_category: 'FundraiseUp',
+                event_label: 'Checkout Opened'
+            });
+        });
+
+        FundraiseUp.on('donation.successful', function(donation) {
+            gtag('event', 'purchase', {
+                transaction_id: donation.id,
+                value: donation.amount,
+                currency: donation.currency,
+                event_category: 'FundraiseUp',
+                event_label: 'Donation Successful'
+            });
+        });
+    </script>
+
 </body>
 </html>
