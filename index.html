@@ -6,6 +6,10 @@
     <title>Helping Hand — Donate</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
+    <script>
+        window.fundraiseup_livemode = false;
+    </script>
+
     <!-- Fundraise Up: the new standard for online giving -->
     <script>(function(w,d,s,n,a){if(!w[n]){var l='call,catch,on,once,set,then,track'
     .split(','),i,o=function(n){return'function'==typeof n?o.l.push([arguments])&&o
@@ -32,26 +36,7 @@
     <script>
         FundraiseUp.on('checkoutOpen', function(e) {
             gtag('event', 'checkout_open', {
-                event_category: 'FundraiseUp',
-                campaign_name: e.campaign.name
-            });
-
-            // Имитируем donationComplete при любом клике на Donate
-            // Поскольку чекаут в iframe — слушаем postMessage
-            window.addEventListener('message', function(event) {
-                if (event.data && (
-                    event.data.type === 'donate' ||
-                    event.data.type === 'submit' ||
-                    JSON.stringify(event.data).toLowerCase().includes('donat')
-                )) {
-                    console.log('💳 Donate clicked via postMessage:', event.data);
-                    gtag('event', 'purchase', {
-                        transaction_id: 'test_' + Date.now(),
-                        value: 700,
-                        currency: 'USD',
-                        event_category: 'FundraiseUp'
-                    });
-                }
+                event_category: 'FundraiseUp'
             });
         });
 
