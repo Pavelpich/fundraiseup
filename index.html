@@ -22,7 +22,7 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-XQTQER1S8R');
+        gtag('config', 'G-XQTQER1S8R', { 'debug_mode':true });
     </script>
 </head>
 <body>
@@ -32,11 +32,9 @@
     <!-- Fundraise Up → GA4 Event Tracking -->
     <script>
         FundraiseUp.on('checkoutOpen', function(e) {
-        console.log('🔥 CHECKOUT OPEN', e);
         gtag('event', 'checkout_open', {
             event_category: 'FundraiseUp'
         });
-        console.log('✅ gtag called');
     });
 
         FundraiseUp.on('donationComplete', function(details) {
